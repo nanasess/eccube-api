@@ -46,11 +46,11 @@ class AbstractEccubeApiTestCase extends AbstractWebTestCase
             $redirect_uri = $faker->url;
         }
         $Client = new OAuth2Client();
-        if ($User instanceof \Eccube\Entity\Customer) {
-            $Client->setCustomer($User);
-        } else {
-            $Client->setMember($User);
-        }
+        // if ($User instanceof \Eccube\Entity\Customer) {
+        //     $Client->setCustomer($User);
+        // } else {
+        //     $Client->setMember($User);
+        // }
 
         $Client->setAppName($app_name);
         $Client->setRedirectUri($redirect_uri);

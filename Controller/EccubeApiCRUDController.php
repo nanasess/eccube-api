@@ -59,17 +59,17 @@ class EccubeApiCRUDController extends AbstractApiController
         $searchConditions = array();
         $excludeAttribute = array('__initializer__', '__cloner__', '__isInitialized__');
         $excludes = array();
-        if (is_array($AccessToken) && is_object($AccessToken['client'])) {
+        if (is_array($AccessToken) && is_object($AccessToken['user'])) {
             // Customer で認証されている場合
-            if ($AccessToken['client']->hasCustomer()) {
+            if ($AccessToken['user']->hasCustomer()) {
                 switch ($table) {
                     case 'customer':
-                        $searchConditions['id'] = $AccessToken['client']->getCustomer()->getId();
+                        $searchConditions['id'] = $AccessToken['user']->getCustomer()->getId();
                         break;
 
                     case 'customer_address':
                     case 'order':
-                        $searchConditions['Customer'] = $AccessToken['client']->getCustomer();
+                        $searchConditions['Customer'] = $AccessToken['user']->getCustomer();
                         break;
                     case 'order_detail':
                         // Customer のみに絞る
@@ -93,7 +93,7 @@ class EccubeApiCRUDController extends AbstractApiController
             $qb = $Repository->createQueryBuilder('od')
                 ->leftJoin('od.Order', 'o')
                 ->andWhere('o.Customer = :Customer')
-                ->setParameter('Customer', $AccessToken['client']->getCustomer());
+                ->setParameter('Customer', $AccessToken['user']->getCustomer());
             $FindResults = $qb->getQuery()->getResult();
         } else {
             $FindResults = $Repository->findBy($searchConditions);
@@ -280,19 +280,19 @@ class EccubeApiCRUDController extends AbstractApiController
         $AccessToken = $this->getAccessToken($app, $request);
         $excludeAttribute = array('__initializer__', '__cloner__', '__isInitialized__');
         $excludes = array();
-        if (is_array($AccessToken) && is_object($AccessToken['client'])) {
+        if (is_array($AccessToken) && is_object($AccessToken['user'])) {
             // Customer で認証されている場合
-            if ($AccessToken['client']->hasCustomer()) {
+            if ($AccessToken['user']->hasCustomer()) {
                 $id = $params_arr[0];
                 switch ($table) {
                     case 'customer':
-                        if ($id != $AccessToken['client']->getCustomer()->getId()) {
+                        if ($id != $AccessToken['user']->getCustomer()->getId()) {
                             return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                         }
                         break;
                     case 'customer_address':
                     case 'order':
-                        if (is_array($Results) && $Results[$table]['Customer']['id'] != $AccessToken['client']->getCustomer()->getId()) {
+                        if (is_array($Results) && $Results[$table]['Customer']['id'] != $AccessToken['user']->getCustomer()->getId()) {
                             return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                         }
                         break;
@@ -300,7 +300,7 @@ class EccubeApiCRUDController extends AbstractApiController
                         // XXX EC-CUBE本体側の OrderDetailRepository で実装すべき
                         $OrderDetail = $app['orm.em']->getRepository($className)->find($id);
                         $Order = $OrderDetail->getOrder();
-                        if ($Order->getCustomer()->getId() != $AccessToken['client']->getCustomer()->getId()) {
+                        if ($Order->getCustomer()->getId() != $AccessToken['user']->getCustomer()->getId()) {
                             return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                         }
                 }
@@ -427,13 +427,13 @@ class EccubeApiCRUDController extends AbstractApiController
 
         // Customer で認証されている場合
         $AccessToken = $this->getAccessToken($app, $request);
-        if (is_array($AccessToken) && $AccessToken['client']->hasCustomer()) {
+        if (is_array($AccessToken) && $AccessToken['user']->hasCustomer()) {
             switch ($table) {
                 case 'customer':
                     return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                     break;
                 case 'customer_address':
-                    if ($Entity->getCustomer()->getId() != $AccessToken['client']->getCustomer()->getId()) {
+                    if ($Entity->getCustomer()->getId() != $AccessToken['user']->getCustomer()->getId()) {
                         return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                     }
                     break;
@@ -565,10 +565,10 @@ class EccubeApiCRUDController extends AbstractApiController
         $excludeAttribute = array('__initializer__', '__cloner__', '__isInitialized__', 'id');
         $excludes = array();
         // Customer で認証されている場合
-        if (is_array($AccessToken) && $AccessToken['client']->hasCustomer()) {
+        if (is_array($AccessToken) && $AccessToken['user']->hasCustomer()) {
             switch ($table) {
                 case 'customer':
-                    if ($Entity->getId() != $AccessToken['client']->getCustomer()->getId()) {
+                    if ($Entity->getId() != $AccessToken['user']->getCustomer()->getId()) {
                         return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                     }
                     $excludes = array(
@@ -590,7 +590,7 @@ class EccubeApiCRUDController extends AbstractApiController
                     );
                     break;
                 case 'customer_address':
-                    if ($Entity->getCustomer()->getId() != $AccessToken['client']->getCustomer()->getId()) {
+                    if ($Entity->getCustomer()->getId() != $AccessToken['user']->getCustomer()->getId()) {
                         return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                     }
                     $excludes = array(
@@ -654,13 +654,13 @@ class EccubeApiCRUDController extends AbstractApiController
 
         // Customer で認証されている場合
         $AccessToken = $this->getAccessToken($app, $request);
-        if (is_array($AccessToken) && $AccessToken['client']->hasCustomer()) {
+        if (is_array($AccessToken) && $AccessToken['user']->hasCustomer()) {
             switch ($table) {
                 case 'customer':
                     return $this->getWrapperedErrorResponseBy($app, 'Method Not Allowed', 405);
                     break;
                 case 'customer_address':
-                    if ($Entity->getCustomer()->getId() != $AccessToken['client']->getCustomer()->getId()) {
+                    if ($Entity->getCustomer()->getId() != $AccessToken['user']->getCustomer()->getId()) {
                         return $this->getWrapperedErrorResponseBy($app, 'Access Forbidden', 403);
                     }
                     break;
@@ -732,7 +732,7 @@ class EccubeApiCRUDController extends AbstractApiController
             }
 
             // Customer で認証すれば参照可能なテーブル
-            if ($AccessToken['client']->hasCustomer()) {
+            if ($AccessToken['user']->hasCustomer()) {
                 switch ($table) {
                     case 'customer':
                     case 'customer_address':

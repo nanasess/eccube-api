@@ -823,4 +823,30 @@ class UserInfo extends \Eccube\Entity\AbstractEntity
         }
         return $Results;
     }
+
+    /**
+     * Member を保持しているかどうか.
+     *
+     * @return boolean Member を保持している場合 true
+     */
+    public function hasMember()
+    {
+        if (is_object($this->getMember()) && $this->getMember()->getDelFlg() == Constant::DISABLED) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Customer を保持しているかどうか.
+     *
+     * @return boolean Customer を保持している場合 true
+     */
+    public function hasCustomer()
+    {
+        if (is_object($this->getCustomer()) && $this->getCustomer()->getDelFlg() == Constant::DISABLED) {
+            return true;
+        }
+        return false;
+    }
 }
