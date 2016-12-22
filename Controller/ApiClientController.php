@@ -188,7 +188,7 @@ class ApiClientController extends AbstractController
         $app->log('a');
         return $app->render($view, array(
             'form' => null,
-            'User' => $app->user(),
+            'User' => null,
             'Client' => null,
         ));
 
