@@ -130,8 +130,8 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
     {
         var_dump(__METHOD__);
         var_dump(memory_get_usage());
-        $this->MemberUserInfo = $this->createUserInfo($this->Member);
-        $this->MemberClient = $this->createApiClient($this->Member);
+        // $this->MemberUserInfo = $this->createUserInfo($this->Member);
+        // $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
         $crawler = $client->request(
             'GET',
