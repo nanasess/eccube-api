@@ -108,4 +108,5 @@ after_success:
 
 after_failure:
   - ls -al app/log/
-  # - 'cat app/log/site_`date +"%Y-%m-%d"`.log'
+  - 'cat app/log/site_`date +"%Y-%m-%d"`.log'
+  - 'cat app/log/front_site_`date +"%Y-%m-%d"`.log'
