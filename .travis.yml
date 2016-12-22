@@ -21,8 +21,8 @@ env:
   matrix:
     # ec-cube master
     - ECCUBE_VERSION=master DB=mysql USER=root DBNAME=myapp_test DBPASS=' ' DBUSER=root
-                            DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres
     - ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres
+    - ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
     - ECCUBE_VERSION=master DB=sqlite
     # ec-cube 3.0.9
     # - ECCUBE_VERSION=3.0.9 DB=mysql USER=root DBNAME=myapp_test DBPASS=' ' DBUSER=root
@@ -47,20 +47,27 @@ env:
 
 matrix:
   fast_finish: true
+  include:
+    - php: 7.0
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
   exclude:
-    - php: 7.0
-      env: ECCUBE_VERSION=3.0.10 DB=mysql USER=root DBNAME=myapp_test DBPASS=' ' DBUSER=root
-    - php: 7.0
-      env: ECCUBE_VERSION=3.0.10 DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres
-    - php: 7.0
-      env: ECCUBE_VERSION=3.0.10 DB=sqlite
+    - php: 5.4
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
+    - php: 5.5
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
+    - php: 5.6
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
+    - php: 7.1
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
   allow_failures:
+    - php: 7.0
+      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
     - php: 7.1
     - env: DB=sqlite
 
 before_script:
-  - if [[ $TRAVIS_PHP_VERSION =~ ^[5] ]] || [[ $TRAVIS_PHP_VERSION =~ ^"7.1" ]]; then phpenv config-rm xdebug.ini ; fi
-  - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - if [[ $XDEBUG != 1 ]] ; then phpenv config-rm xdebug.ini ; fi
+  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   # archive plugin
   - tar cvzf ${HOME}/${PLUGIN_CODE}.tar.gz ./*
   # clone ec-cube
@@ -87,8 +94,8 @@ before_script:
 script:
   # exec phpunit on ec-cube
 
-  - if [[ $TRAVIS_PHP_VERSION =~ ^[5] ]] || [[ $TRAVIS_PHP_VERSION =~ ^"7.1" ]]; then phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist ; fi
-  - if [[ $TRAVIS_PHP_VERSION =~ ^"7.0" ]]; then ./vendor/bin/phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist --coverage-clover=coverage.clover ; fi
+  - if [[ $XDEBUG != 1 ]]; then phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist ; fi
+  - if [[ $XDEBUG = 1 ]]; then ./vendor/bin/phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist --coverage-clover=coverage.clover ; fi
 
 after_script:
   # disable plugin
@@ -97,4 +104,4 @@ after_script:
   - php app/console plugin:develop uninstall --code=${PLUGIN_CODE} --uninstall-force=true
 
 after_success:
-  - if [[ $TRAVIS_PHP_VERSION =~ ^[7] ]]; then php vendor/bin/coveralls -v -x coverage.clover ; fi
+  - if [[ $XDEBUG != 1 ]]; then php vendor/bin/coveralls -v -x coverage.clover ; fi
