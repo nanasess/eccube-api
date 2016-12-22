@@ -201,6 +201,12 @@ class ApiClientController extends AbstractController
             $view = 'EccubeApi/Resource/template/mypage/Api/lists.twig';
             $scope_key = 'customer_flg';
         }
+        return $app->render($view, array(
+            'form' => $form->createView(),
+            'User' => $User,
+            'Client' => $Client,
+        ));
+
         $app->log('d');
         $Client = new \Plugin\EccubeApi\Entity\OAuth2\Client();
         $app->log('e');
