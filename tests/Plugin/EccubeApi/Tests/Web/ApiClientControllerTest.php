@@ -137,13 +137,13 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
             $this->app->path('mypage_api_client_new', array('member_id' => $this->Member->getId()))
         );
 
-        $form = $this->createForm($this->MemberClient, $this->MemberUserInfo);
-        $client_id = $this->MemberClient->getId();
-        $crawler = $client->request(
-            'POST',
-            $this->app->path('admin_setting_system_client_new', array('member_id' => $this->Member->getId())),
-            array('api_client' => $form)
-        );
+        // $form = $this->createForm($this->MemberClient, $this->MemberUserInfo);
+        // $client_id = $this->MemberClient->getId();
+        // $crawler = $client->request(
+        //     'POST',
+        //     $this->app->path('admin_setting_system_client_new', array('member_id' => $this->Member->getId())),
+        //     array('api_client' => $form)
+        // );
 
         // $this->assertTrue($this->client->getResponse()->isRedirect($this->client->getResponse()->headers->get('location')));
         // preg_match('/([0-9]+)\/edit$/', $this->client->getResponse()->headers->get('location'), $matched);
