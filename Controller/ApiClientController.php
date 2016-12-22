@@ -186,12 +186,12 @@ class ApiClientController extends AbstractController
     {
         $is_admin = false;
         $app->log('a');
-        // return $app->render($view, array(
-        //     'form' => null,
-        //     'User' => null,
-        //     'Client' => null,
-        // ));
-        return null;
+        return $app->render($view, array(
+            'form' => null,
+            'User' => null,
+            'Client' => null,
+        ));
+
         // ログイン中のユーザーのインスタンスによって処理を切り替える
         if ($app->user() instanceof \Eccube\Entity\Member) {
             $app->log('b');
