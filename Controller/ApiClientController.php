@@ -189,14 +189,16 @@ class ApiClientController extends AbstractController
         // ログイン中のユーザーのインスタンスによって処理を切り替える
         if ($app->user() instanceof \Eccube\Entity\Member) {
             $app->log('b');
-            $User = $app['eccube.repository.member']->find($member_id);
+            // $User = $app['eccube.repository.member']->find($member_id);
+            $User = $app->user();
             $searchConditions = array('Member' => $User);
             $view = 'EccubeApi/Resource/template/admin/Api/lists.twig';
             $is_admin = true;
             $scope_key = 'member_flg';
         } else {
             $app->log('c');
-            $User = $app['eccube.repository.customer']->find($app->user()->getId());
+            // $User = $app['eccube.repository.customer']->find($app->user()->getId());
+            $User = $app->user();
             $searchConditions = array('Customer' => $User);
             $view = 'EccubeApi/Resource/template/mypage/Api/lists.twig';
             $scope_key = 'customer_flg';
