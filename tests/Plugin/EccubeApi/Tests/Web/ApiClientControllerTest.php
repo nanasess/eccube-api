@@ -31,6 +31,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiLists()
     {
+        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -43,6 +44,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiClientEdit()
     {
+        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -67,6 +69,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiNewClient()
     {
+        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -91,6 +94,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiClientDelete()
     {
+        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client_id = $this->CustomerClient->getId();
@@ -111,6 +115,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiLists()
     {
+        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
@@ -123,6 +128,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiNewClient()
     {
+        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
@@ -150,6 +156,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiClientEdit()
     {
+        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
@@ -185,6 +192,7 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiClientDelete()
     {
+        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client_id = $this->MemberClient->getId();
