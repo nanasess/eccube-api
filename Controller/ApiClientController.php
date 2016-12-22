@@ -186,6 +186,7 @@ class ApiClientController extends AbstractController
     {
         $is_admin = false;
         $app->log('a');
+        $view = 'EccubeApi/Resource/template/admin/Api/lists.twig';
         return $app->render($view, array(
             'form' => null,
             'User' => null,
