@@ -185,31 +185,31 @@ class ApiClientController extends AbstractController
     public function newClient(Application $app, Request $request, $member_id = null)
     {
         $is_admin = false;
-        var_dump('a');
+        $app->log('a');
         // ログイン中のユーザーのインスタンスによって処理を切り替える
         if ($app->user() instanceof \Eccube\Entity\Member) {
-            var_dump('b');
+            $app->log('b');
             $User = $app['eccube.repository.member']->find($member_id);
             $searchConditions = array('Member' => $User);
             $view = 'EccubeApi/Resource/template/admin/Api/lists.twig';
             $is_admin = true;
             $scope_key = 'member_flg';
         } else {
-            var_dump('c');
+            $app->log('c');
             $User = $app['eccube.repository.customer']->find($app->user()->getId());
             $searchConditions = array('Customer' => $User);
             $view = 'EccubeApi/Resource/template/mypage/Api/lists.twig';
             $scope_key = 'customer_flg';
         }
-        var_dump('d');
+        $app->log('d');
         $Client = new \Plugin\EccubeApi\Entity\OAuth2\Client();
-        var_dump('e');
+        $app->log('e');
         $builder = $app['form.factory']->createBuilder('api_client', $Client);
-        var_dump('f');
+        $app->log('f');
         $builder->remove('Scopes');
-        var_dump('g');
+        $app->log('g');
         $Scopes = $app['eccube.repository.oauth2.scope']->findBy(array('is_default' => true, $scope_key => 1));
-        var_dump('h');
+        $app->log('h');
         $builder->add('Scopes', 'entity', array(
                 'label' => 'scope',
                 'choice_label' => 'label',
@@ -222,55 +222,55 @@ class ApiClientController extends AbstractController
                 'choices' => $Scopes,
                 'class' => 'Plugin\EccubeApi\Entity\OAuth2\Scope'
         ));
-        var_dump('i');
+        $app->log('i');
         $form = $builder->getForm();
-        var_dump('j');
+        $app->log('j');
         $form['Scopes']->setData($Scopes);
-        var_dump('k');
+        $app->log('k');
         $form['encryption_algorithm']->setData(self::DEFAULT_ENCRYPTION_ALGORITHM);
-        var_dump('l');
+        $app->log('l');
 
         $form->handleRequest($request);
-        var_dump('m');
+        $app->log('m');
         if ($form->isSubmitted() && $form->isValid()) {
-            var_dump('n');
+            $app->log('n');
             $PublicKey = null;
             $UserInfo = $app['eccube.repository.oauth2.openid.userinfo']->findOneBy($searchConditions);
-            var_dump('o');
+            $app->log('o');
             if (!is_object($UserInfo)) {
-                var_dump('p');
+                $app->log('p');
                 // 該当ユーザーの UserInfo が存在しない場合は生成する
                 $UserInfo = new \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo();
                 $UserInfo->setAddress(new \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfoAddress());
             } else {
-                var_dump('q');
+                $app->log('q');
                 $PublicKey = $app['eccube.repository.oauth2.openid.public_key']->findOneBy(array('UserInfo' => $UserInfo));
             }
-            var_dump('r');
+            $app->log('r');
             $client_id = sha1(openssl_random_pseudo_bytes(100));
-            var_dump('s');
+            $app->log('s');
             $client_secret = sha1(openssl_random_pseudo_bytes(100));
-            var_dump('t');
+            $app->log('t');
 
             $Client->setClientIdentifier($client_id);
-            var_dump('u');
+            $app->log('u');
             $Client->setClientSecret($client_secret);
-            var_dump('v');
+            $app->log('v');
 
             if ($is_admin) {
-                var_dump('w');
+                $app->log('w');
                 $Client->setMember($User);
             } else {
-                var_dump('x');
+                $app->log('x');
                 $Client->setCustomer($User);
             }
-            var_dump('y');
+            $app->log('y');
             $app['orm.em']->persist($Client);
-            var_dump('z');
+            $app->log('z');
             $app['orm.em']->flush($Client);
-            var_dump('a');
+            $app->log('a');
             $Scopes = $form['Scopes']->getData();
-            var_dump('b');
+            $app->log('b');
             foreach ($Scopes as $Scope) {
                 $ClientScope = new \Plugin\EccubeApi\Entity\OAuth2\ClientScope();
                 $ClientScope->setClient($Client);
@@ -280,11 +280,11 @@ class ApiClientController extends AbstractController
                 $app['orm.em']->persist($ClientScope);
                 $Client->addClientScope($ClientScope);
             }
-            var_dump('c');
+            $app->log('c');
             $is_new_public_key = false;
-            var_dump('d');
+            $app->log('d');
             if (!is_object($PublicKey)) {
-                var_dump('e');
+                $app->log('e');
                 // 該当ユーザーの公開鍵が存在しない場合は生成する. UserInfo と 公開鍵は 1:1 となる.
                 $RSAKey = new \phpseclib\Crypt\RSA();
                 $is_new_public_key = true;
@@ -301,45 +301,45 @@ class ApiClientController extends AbstractController
                 // http://openid-foundation-japan.github.io/openid-connect-core-1_0.ja.html#SelfIssuedValidation
                 $UserInfo->setSub($JWK->thumbprint());
             }
-            var_dump('f');
+            $app->log('f');
             if ($is_admin) {
-                var_dump('g');
+                $app->log('g');
                 $UserInfo->setMember($User);
                 $UserInfo->mergeMember();
             } else {
-                var_dump('h');
+                $app->log('h');
                 $UserInfo->setCustomer($User);
                 $UserInfo->mergeCustomer();
             }
-            var_dump('i');
+            $app->log('i');
             if (is_object($UserInfo->getAddress())
                 && is_null($UserInfo->getAddress()->getId())) {
-                var_dump('j');
+                $app->log('j');
                 $UserInfoAddress = $UserInfo->getAddress();
                 $app['orm.em']->persist($UserInfoAddress);
                 $app['orm.em']->flush($UserInfoAddress);
                 $UserInfo->setAddress($UserInfoAddress);
             }
-            var_dump('k');
+            $app->log('k');
             $app['orm.em']->persist($UserInfo);
             if ($is_new_public_key) {
-                var_dump('l');
+                $app->log('l');
                 $app['orm.em']->persist($PublicKey);
             }
 
-            var_dump('m');
+            $app->log('m');
             $app['orm.em']->flush();
-            var_dump('n');
+            $app->log('n');
             if ($is_admin) {
-                var_dump('o');
+                $app->log('o');
                 $app->addSuccess('admin.register.complete', 'admin');
                 $route = 'admin_setting_system_client_edit';
             } else {
-                var_dump('p');
+                $app->log('p');
                 $app->addSuccess('admin.register.complete', 'front');
                 $route = 'mypage_api_client_edit';
             }
-            var_dump('q');
+            $app->log('q');
             return $app->redirect(
                 $app->url($route,
                           array(
@@ -349,15 +349,15 @@ class ApiClientController extends AbstractController
                 )
             );
         }
-        var_dump('r');
+        $app->log('r');
         if ($is_admin) {
-            var_dump('s');
+            $app->log('s');
             $view = 'EccubeApi/Resource/template/admin/Api/edit.twig';
         } else {
-            var_dump('t');
+            $app->log('t');
             $view = 'EccubeApi/Resource/template/mypage/Api/edit.twig';
         }
-        var_dump('u');
+        $app->log('u');
         return $app->render($view, array(
             'form' => $form->createView(),
             'User' => $User,

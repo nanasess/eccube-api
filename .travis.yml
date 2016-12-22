@@ -105,3 +105,6 @@ after_script:
 
 after_success:
   - if [[ $XDEBUG != 1 ]]; then php vendor/bin/coveralls -v -x coverage.clover ; fi
+
+after_failure:
+  - 'cat app/log/site_`date +"%Y-%m-%d"`.log'
