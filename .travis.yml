@@ -47,9 +47,6 @@ env:
 
 matrix:
   fast_finish: true
-  include:
-    - php: 7.0
-      env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
   exclude:
     - php: 5.4
       env: ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
@@ -67,7 +64,8 @@ matrix:
 
 before_script:
   - if [[ $XDEBUG != 1 ]] ; then phpenv config-rm xdebug.ini ; fi
-  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - phpenv config-rm mcrypt.ini
+  - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   # archive plugin
   - tar cvzf ${HOME}/${PLUGIN_CODE}.tar.gz ./*
   # clone ec-cube
