@@ -64,6 +64,7 @@ matrix:
 
 before_script:
   - if [[ $XDEBUG != 1 ]] ; then phpenv config-rm xdebug.ini ; fi
+  - cat ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ls -al ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/
   # - phpenv config-rm mcrypt.ini
   - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
