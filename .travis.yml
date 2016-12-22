@@ -8,9 +8,9 @@ cache:
 
 php:
 #  - 5.3
-  # - 5.4
-  # - 5.5
-  # - 5.6
+  - 5.4
+  - 5.5
+  - 5.6
   - 7.0
   # - 7.1
 
@@ -20,8 +20,8 @@ env:
     PLUGIN_CODE=EccubeApi
   matrix:
     # ec-cube master
-    - ECCUBE_VERSION=master DB=mysql USER=root DBNAME=myapp_test DBPASS=' ' DBUSER=root
-    - ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres
+    # - ECCUBE_VERSION=master DB=mysql USER=root DBNAME=myapp_test DBPASS=' ' DBUSER=root
+    # - ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres
     # - ECCUBE_VERSION=master DB=pgsql USER=postgres DBNAME=myapp_test DBPASS=password DBUSER=postgres XDEBUG=1
     - ECCUBE_VERSION=master DB=sqlite
     # ec-cube 3.0.9
