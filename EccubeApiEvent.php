@@ -37,24 +37,21 @@ class EccubeApiEvent
      */
     public function onAppRequest(GetResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-        $request = $event->getRequest();
-        if ($request->getMethod() === "OPTIONS") {
-            $response = new Response();
-            // https://developer.mozilla.org/ja/docs/HTTP_access_control#Requests_with_credentials
-            $response->headers->set("Access-Control-Allow-Origin","*");
-            $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
-            $response->headers->set("Access-Control-Allow-Headers","Content-Type");
-            $response->setStatusCode(204);
-        }
+        // $request = $event->getRequest();
+        // if ($request->getMethod() === "OPTIONS") {
+        //     $response = new Response();
+        //     // https://developer.mozilla.org/ja/docs/HTTP_access_control#Requests_with_credentials
+        //     $response->headers->set("Access-Control-Allow-Origin","*");
+        //     $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
+        //     $response->headers->set("Access-Control-Allow-Headers","Content-Type");
+        //     $response->setStatusCode(204);
+        // }
 
-        //accepting JSON
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
+        // //accepting JSON
+        // if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+        //     $data = json_decode($request->getContent(), true);
+        //     $request->request->replace(is_array($data) ? $data : array());
+        // }
     }
 
     /**
@@ -64,14 +61,10 @@ class EccubeApiEvent
      */
     public function onAppResponse(FilterResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        $response = $event->getResponse();
-        $response->headers->set("Access-Control-Allow-Origin","*");
-        $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
-        $response->headers->set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        // $response = $event->getResponse();
+        // $response->headers->set("Access-Control-Allow-Origin","*");
+        // $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
+        // $response->headers->set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     }
 
     /**
@@ -81,20 +74,16 @@ class EccubeApiEvent
      */
     public function onRouteAdminMemberResponse(FilterResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        $request = $event->getRequest();
-        $response = $event->getResponse();
-        $html = $response->getContent();
-        $crawler = new Crawler($html);
-        $oldElement= $crawler->filter('#common_button_box__insert_button');
-        $oldHtml= $oldElement->html();
-        $newHtml= $oldHtml.'<button class="btn btn-primary btn-block btn-lg" onclick="window.location.href=\'api\';">APIクライアント一覧</button>';
-        $html = $crawler->html();
-        $html =str_replace($oldHtml, $newHtml, $html);
-        $response->setContent($html);
-        $event->setResponse($response);
+        // $request = $event->getRequest();
+        // $response = $event->getResponse();
+        // $html = $response->getContent();
+        // $crawler = new Crawler($html);
+        // $oldElement= $crawler->filter('#common_button_box__insert_button');
+        // $oldHtml= $oldElement->html();
+        // $newHtml= $oldHtml.'<button class="btn btn-primary btn-block btn-lg" onclick="window.location.href=\'api\';">APIクライアント一覧</button>';
+        // $html = $crawler->html();
+        // $html =str_replace($oldHtml, $newHtml, $html);
+        // $response->setContent($html);
+        // $event->setResponse($response);
     }
 }
