@@ -184,7 +184,7 @@ class ApiClientController extends AbstractController
      */
     public function newClient(Application $app, Request $request, $member_id = null)
     {
-        // var_dump(memory_get_usage());
+        var_dump(memory_get_usage());
         $is_admin = false;
         // ログイン中のユーザーのインスタンスによって処理を切り替える
         if ($app->user() instanceof \Eccube\Entity\Member) {
