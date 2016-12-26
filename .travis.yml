@@ -74,6 +74,8 @@ before_script:
   - cd ec-cube
   # checkout version
   - sh -c "if [ ! '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b ${ECCUBE_VERSION} refs/tags/${ECCUBE_VERSION}; fi"
+  - sh -c "if [ '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b previous d054ff40217ce1af578b80f09b106e9ce554f93f ; fi"
+
   # update composer
   - composer selfupdate
   - composer global require --optimize-autoloader "hirak/prestissimo"
