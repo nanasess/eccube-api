@@ -30,7 +30,7 @@ class AbstractEccubeApiTestCase extends AbstractWebTestCase
     public function setUp()
     {
         parent::setUp();
-        var_dump(get_class(this));
+        var_dump(get_class($this));
         var_dump(memory_get_usage());
     }
     /**
