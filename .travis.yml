@@ -74,7 +74,7 @@ before_script:
   - cd ec-cube
   # checkout version
   - sh -c "if [ ! '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b ${ECCUBE_VERSION} refs/tags/${ECCUBE_VERSION}; fi"
-  - sh -c "if [ '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b previous e23ecee0a440590d5a5ea84eda204811513ff07a ; fi"
+  - sh -c "if [ '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b previous 357bdf541fcfb37225f349ff679aecc5c460cca3~1 ; fi"
 
   # update composer
   - composer selfupdate
