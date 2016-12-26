@@ -184,6 +184,7 @@ class ApiClientController extends AbstractController
      */
     public function newClient(Application $app, Request $request, $member_id = null)
     {
+        echo 'M '.memory_get_usage().PHP_EOL;
         $is_admin = false;
         $app->log('a');
         $view = 'EccubeApi/Resource/template/admin/Api/lists.twig';
