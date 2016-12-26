@@ -75,7 +75,7 @@ before_script:
   # checkout version
   - sh -c "if [ ! '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b ${ECCUBE_VERSION} refs/tags/${ECCUBE_VERSION}; fi"
   - sh -c "if [ '${ECCUBE_VERSION}' = 'master' ]; then  git checkout -b previous 062ad925cd41076a9f86e3fffc549ed584e02243 ; fi"
-  - curl -L -Ss https://gist.githubusercontent.com/nanasess/30f1e8cf4a5ed08b66da02604d0226ec/raw/63175739f6e0478c994c36cb07d698a5d5b82816/category.patch | patch -p1
+  - curl -L -Ss https://gist.githubusercontent.com/nanasess/30f1e8cf4a5ed08b66da02604d0226ec/raw/5af2f46ddf9d471fc3e0ec9b7575bae70c356dc5/category.patch | patch -p1
 
   # update composer
   - composer selfupdate
