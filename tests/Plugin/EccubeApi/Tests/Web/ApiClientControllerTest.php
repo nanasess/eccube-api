@@ -91,6 +91,8 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiClientDelete()
     {
+        var_dump(__METHOD__);
+        var_dump(memory_get_usage());
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client_id = $this->CustomerClient->getId();

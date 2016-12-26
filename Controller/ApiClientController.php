@@ -184,6 +184,7 @@ class ApiClientController extends AbstractController
      */
     public function newClient(Application $app, Request $request, $member_id = null)
     {
+        var_dump(__METHOD__);
         var_dump(memory_get_usage());
         $is_admin = false;
         // ログイン中のユーザーのインスタンスによって処理を切り替える
@@ -331,6 +332,8 @@ class ApiClientController extends AbstractController
 
     public function delete(Application $app, Request $request, $member_id = null, $client_id = null)
     {
+        var_dump(__METHOD__);
+        var_dump(memory_get_usage());
         $this->isTokenValid($app);
 
         $Client = $app['eccube.repository.oauth2.client']->find($client_id);
