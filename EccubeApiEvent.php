@@ -37,6 +37,9 @@ class EccubeApiEvent
      */
     public function onAppRequest(GetResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
         $request = $event->getRequest();
         if ($request->getMethod() === "OPTIONS") {
             $response = new Response();
@@ -61,6 +64,10 @@ class EccubeApiEvent
      */
     public function onAppResponse(FilterResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
         $response = $event->getResponse();
         $response->headers->set("Access-Control-Allow-Origin","*");
         $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
@@ -74,6 +81,10 @@ class EccubeApiEvent
      */
     public function onRouteAdminMemberResponse(FilterResponseEvent $event)
     {
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
         $request = $event->getRequest();
         $response = $event->getResponse();
         $html = $response->getContent();
