@@ -31,7 +31,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiLists()
     {
-        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -44,7 +43,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiClientEdit()
     {
-        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -69,7 +67,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiNewClient()
     {
-        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client = $this->logInTo($this->Customer);
@@ -94,7 +91,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testCustomerApiClientDelete()
     {
-        var_dump(__METHOD__);
         $this->CustomerUserInfo = $this->createUserInfo($this->Customer);
         $this->CustomerClient = $this->createApiClient($this->Customer);
         $client_id = $this->CustomerClient->getId();
@@ -115,7 +111,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiLists()
     {
-        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
@@ -128,36 +123,33 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiNewClient()
     {
-        var_dump(__METHOD__);
-        var_dump(memory_get_usage());
-        // $this->MemberUserInfo = $this->createUserInfo($this->Member);
-        // $this->MemberClient = $this->createApiClient($this->Member);
-        // $client = $this->logInTo($this->Member);
-        $crawler = $this->client->request(
+        $this->MemberUserInfo = $this->createUserInfo($this->Member);
+        $this->MemberClient = $this->createApiClient($this->Member);
+        $client = $this->logInTo($this->Member);
+        $crawler = $client->request(
             'GET',
             $this->app->path('mypage_api_client_new', array('member_id' => $this->Member->getId()))
         );
 
-        // $form = $this->createForm($this->MemberClient, $this->MemberUserInfo);
-        // $client_id = $this->MemberClient->getId();
-        // $crawler = $client->request(
-        //     'POST',
-        //     $this->app->path('admin_setting_system_client_new', array('member_id' => $this->Member->getId())),
-        //     array('api_client' => $form)
-        // );
+        $form = $this->createForm($this->MemberClient, $this->MemberUserInfo);
+        $client_id = $this->MemberClient->getId();
+        $crawler = $client->request(
+            'POST',
+            $this->app->path('admin_setting_system_client_new', array('member_id' => $this->Member->getId())),
+            array('api_client' => $form)
+        );
 
-        // $this->assertTrue($this->client->getResponse()->isRedirect($this->client->getResponse()->headers->get('location')));
-        // preg_match('/([0-9]+)\/edit$/', $this->client->getResponse()->headers->get('location'), $matched);
+        $this->assertTrue($this->client->getResponse()->isRedirect($this->client->getResponse()->headers->get('location')));
+        preg_match('/([0-9]+)\/edit$/', $this->client->getResponse()->headers->get('location'), $matched);
 
-        // $Client = $this->app['eccube.repository.oauth2.client']->find($matched[1]);
-        // $this->expected = $form['app_name'];
-        // $this->actual = $Client->getAppName();
-        // $this->verify();
+        $Client = $this->app['eccube.repository.oauth2.client']->find($matched[1]);
+        $this->expected = $form['app_name'];
+        $this->actual = $Client->getAppName();
+        $this->verify();
     }
 
     public function testMemberApiClientEdit()
     {
-        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client = $this->logInTo($this->Member);
@@ -193,7 +185,6 @@ class ApiClientControllerTest extends AbstractEccubeApiWebTestCase
 
     public function testMemberApiClientDelete()
     {
-        var_dump(__METHOD__);
         $this->MemberUserInfo = $this->createUserInfo($this->Member);
         $this->MemberClient = $this->createApiClient($this->Member);
         $client_id = $this->MemberClient->getId();

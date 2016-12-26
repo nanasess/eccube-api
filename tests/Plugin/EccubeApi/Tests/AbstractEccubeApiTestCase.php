@@ -27,13 +27,6 @@ use Plugin\EccubeApi\Entity\OAuth2\OpenID\PublicKey;
  */
 class AbstractEccubeApiTestCase extends AbstractWebTestCase
 {
-
-    public function setUp()
-    {
-        var_dump(get_class($this));
-        var_dump(memory_get_usage());
-        parent::setUp();
-    }
     /**
      * Client を生成する.
      */

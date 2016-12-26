@@ -66,7 +66,6 @@ before_script:
   - if [[ $XDEBUG != 1 ]] ; then phpenv config-rm xdebug.ini ; fi
   - cat ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ls -al ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/
-  # - phpenv config-rm mcrypt.ini
   - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   # archive plugin
   - tar cvzf ${HOME}/${PLUGIN_CODE}.tar.gz ./*
@@ -106,7 +105,7 @@ after_script:
 after_success:
   - if [[ $XDEBUG != 1 ]]; then php vendor/bin/coveralls -v -x coverage.clover ; fi
 
-after_failure:
-  - ls -al app/log/
-  - 'cat app/log/site_`date +"%Y-%m-%d"`.log'
-  - 'cat app/log/front_site_`date +"%Y-%m-%d"`.log'
+# after_failure:
+#   - ls -al app/log/
+#   - 'cat app/log/site_`date +"%Y-%m-%d"`.log'
+#   - 'cat app/log/front_site_`date +"%Y-%m-%d"`.log'
