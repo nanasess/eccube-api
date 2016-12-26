@@ -93,7 +93,7 @@ before_script:
 script:
   # exec phpunit on ec-cube
 
-  - if [[ $XDEBUG != 1 ]]; then phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist ; fi
+  - if [[ $XDEBUG != 1 ]]; then phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist tests/Plugin/EccubeApi/Tests/Web/ApiClientControllerTest.php ; fi
   - if [[ $XDEBUG = 1 ]]; then ./vendor/bin/phpunit -c app/Plugin/${PLUGIN_CODE}/phpunit.xml.dist --coverage-clover=coverage.clover ; fi
 
 after_script:
