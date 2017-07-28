@@ -16,47 +16,77 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AccessToken
  *
+ *
+ * @ORM\Table(name="plg_oauth2_access_token")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\AccessTokenRepository")
  * @link http://bshaffer.github.io/oauth2-server-php-docs/cookbook/doctrine2/
  */
 class AccessToken extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=40, unique=true)
      */
     private $token;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="client_id", type="integer")
      */
     private $client_id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
      */
     private $user_id;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="expires", type="datetimetz")
      */
     private $expires;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="scope_", type="string", length=4000, nullable=true)
      */
     private $scope;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\Client
+     *
+     * @ORM\OneToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * })
      */
     private $client;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo
+     *
+     * @ORM\OneToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
     private $user;
 

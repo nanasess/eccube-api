@@ -15,41 +15,63 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Scope
+ *
+ * @ORM\Table(name="plg_oauth2_scope")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\ScopeRepository")
  */
 class Scope extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="scope", type="string", length=80, unique=true)
      */
     private $scope;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="label", type="string", length=80, nullable=true)
      */
     private $label;
 
     /**
      * @var boolean
+     *
+     * @ORM\Column(name="is_default", type="boolean")
      */
     private $is_default;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="customer_flg", type="smallint", options={"unsigned":true, "default":0})
      */
     private $customer_flg = '0';
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="member_flg", type="smallint", options={"unsigned":true, "default":1})
      */
     private $member_flg = '1';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Plugin\EccubeApi\Entity\OAuth2\ClientScope", mappedBy="Scope")
      */
     private $ClientScope;
 

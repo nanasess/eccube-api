@@ -15,31 +15,52 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * PublicKey
+ *
+ * @ORM\Table(name="plg_oauth2_openid_public_key")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\OpenID\PublicKeyRepository")
  */
 class PublicKey extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="public_key", type="string", length=2000)
      */
     private $public_key;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="private_key", type="string", length=2000)
      */
     private $private_key;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="encryption_algorithm", type="string", length=100, options={"default": "RS256"})
      */
     private $encryption_algorithm;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo
+     *
+     * @ORM\OneToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="userinfo_id", referencedColumnName="id")
+     * })
      */
     private $UserInfo;
 

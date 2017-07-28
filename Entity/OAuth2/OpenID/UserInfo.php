@@ -15,121 +15,184 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * UserInfo
+ *
+ * @ORM\Table(name="plg_oauth2_openid_userinfo", indexes={@ORM\Index(name="plg_oauth2_userinfo_email_index", columns={"email"}), @ORM\Index(name="plg_oauth2_userinfo_preferred_username_index", columns={"preferred_username"})})
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\OpenID\UserInfoRepository")
  */
 class UserInfo extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="sub", type="string", length=255, unique=true, nullable=false)
      */
     private $sub;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="given_name", type="string", length=255, nullable=true)
      */
     private $given_name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="family_name", type="string", length=255, nullable=true)
      */
     private $family_name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
      */
     private $middle_name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)     
      */
     private $nickname;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="preferred_username", type="string", length=255, nullable=true)
      */
     private $preferred_username;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="profile", type="string", length=4000, nullable=true)
      */
     private $profile;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="picture", type="string", length=4000, nullable=true)
      */
     private $picture;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="website", type="string", length=4000, nullable=true)
      */
     private $website;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=320, nullable=true)
      */
     private $email;
 
     /**
      * @var boolean
+     *
+     * @ORM\Column(name="email_verified", type="boolean", nullable=false, options={"default":false})
      */
     private $email_verified = false;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="gender", type="string", length=32, nullable=true)
      */
     private $gender;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="birthdate", type="datetimetz", nullable=true)
      */
     private $birthdate;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="zoneinfo", type="string", length=128, nullable=true)
      */
     private $zoneinfo;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=32, nullable=true)
      */
     private $locale;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="phone_number", type="string", length=128, nullable=true)
      */
     private $phone_number;
 
     /**
      * @var boolean
+     *
+     * @ORM\Column(name="phone_number_verified", type="boolean", nullable=false, options={"default":false})
      */
     private $phone_number_verified = false;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetimetz", nullable=false)
      */
     private $updated_at;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfoAddress
+     *
+     * @ORM\OneToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfoAddress")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     * })
      */
     private $address;
 
     /**
      * @var \Eccube\Entity\Customer
+     *
+     * @ORM\OneToOne(targetEntity="Eccube\Entity\Customer")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="customer_id", referencedColumnName="customer_id")
+     * })
      */
     private $Customer;
 
     /**
      * @var \Eccube\Entity\Member
+     *
+     * @ORM\OneToOne(targetEntity="Eccube\Entity\Member")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="member_id", referencedColumnName="member_id")
+     * })
      */
     private $Member;
 

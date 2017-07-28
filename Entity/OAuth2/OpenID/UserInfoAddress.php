@@ -15,41 +15,63 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * UserInfoAddress
+ *
+ * @ORM\Table(name="plg_oauth2_openid_userinfo_address")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\OpenID\UserInfoAddressRepository")
  */
 class UserInfoAddress extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="formatted", type="string", length=4000, nullable=true)
      */
     private $formatted;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="street_address", type="string", length=4000, nullable=true)
      */
     private $street_address;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="locality", type="string", length=4000, nullable=true)
      */
     private $locality;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="region", type="string", length=4000, nullable=true)
      */
     private $region;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="postal_code", type="string", length=32, nullable=true)
      */
     private $postal_code;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=32, nullable=true)
      */
     private $country;
 

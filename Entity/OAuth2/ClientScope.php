@@ -15,26 +15,47 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ClientScope
+ *
+ * @ORM\Table(name="plg_oauth2_client_scope")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\ClientScopeRepository")
  */
 class ClientScope extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="client_id", type="integer", nullable=false, options={"unsigned":false})
+     * @ORM\Id
      */
     private $client_id;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="scope_id", type="integer", nullable=false, options={"unsigned":false})
      */
     private $scope_id;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\Client
+     *
+     * @ORM\ManyToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * })
      */
     private $Client;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\Scope
+     *
+     * @ORM\ManyToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\Scope")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="scope_id", referencedColumnName="id")
+     * })
      */
     private $Scope;
 

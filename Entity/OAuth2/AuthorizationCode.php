@@ -15,51 +15,92 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * AuthorizationCode
+ *
+ * @ORM\Table(name="plg_oauth2_authorization_code")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\AuthorizationCodeRepository")
+")
  */
 class AuthorizationCode extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=40, unique=true)
      */
     private $code;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="client_id", type="integer")
      */
     private $client_id;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
      */
     private $user_id;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="expires", type="datetimetz")
      */
     private $expires;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="redirect_uri", type="string", length=200)
      */
     private $redirect_uri;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="scope", type="string", length=4000, nullable=true)
      */
     private $scope;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="id_token", type="string", length=1000, nullable=true)
+     */
+    private $id_token;
+
+
+    /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\Client
+     *
+     * @ORM\ManyToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\Client")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     * })
      */
     private $client;
 
     /**
      * @var \Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo
+     *
+     * @ORM\ManyToOne(targetEntity="Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
     private $user;
 
@@ -257,11 +298,6 @@ class AuthorizationCode extends \Eccube\Entity\AbstractEntity
     {
         return $this->user;
     }
-    /**
-     * @var string
-     */
-    private $id_token;
-
 
     /**
      * Set id_token

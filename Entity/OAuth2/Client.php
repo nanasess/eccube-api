@@ -17,47 +17,76 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Client
  *
+ * @ORM\Table(name="plg_oauth2_client")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator_type", type="string", length=255)
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="Plugin\EccubeApi\Repository\OAuth2\ClientRepository")
  * @link http://bshaffer.github.io/oauth2-server-php-docs/cookbook/doctrine2/
  */
 class Client extends \Eccube\Entity\AbstractEntity
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", options={"unsigned":true})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="client_identifier", type="string", length=80, unique=true)
      */
     private $client_identifier;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="client_secret", type="string", length=80)
      */
     private $client_secret;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="redirect_uri", type="string", length=2000, options={"default": ""})
      */
     private $redirect_uri;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="app_name", type="string", length=255)
      */
     private $app_name;
 
     /**
      * @var \Eccube\Entity\Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="customer_id", referencedColumnName="customer_id")
+     * })
      */
     private $Customer;
 
     /**
      * @var \Eccube\Entity\Member
+     *
+     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Member")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="member_id", referencedColumnName="member_id")
+     * })
      */
     private $Member;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Plugin\EccubeApi\Entity\OAuth2\ClientScope", mappedBy="Client", cascade={"persist","remove"})
      */
     private $ClientScopes;
 
