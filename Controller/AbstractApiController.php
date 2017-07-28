@@ -76,7 +76,7 @@ abstract class AbstractApiController
      * @param Application $app
      * @param string $code エラーコード
      * @param string $message エラーメッセージ
-     * @returnl void
+     * @return void
      */
     protected function addErrors(Application $app, $code, $message = null)
     {

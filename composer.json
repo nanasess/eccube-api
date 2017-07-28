@@ -1,25 +1,29 @@
 {
   "require": {
-    "gree/jose": "~2.1",
+    "gree/jose": "~2.2",
     "phpseclib/phpseclib": "~2.0",
-    "firebase/php-jwt": "~2.2",
-    "bshaffer/oauth2-server-httpfoundation-bridge": "~1.1",
-    "bshaffer/oauth2-server-php": "~1.8",
-    "symfony/http-foundation": ">=2.7,<2.8"
+    "firebase/php-jwt": "~5.0",
+    "bshaffer/oauth2-server-httpfoundation-bridge": "~1.3",
+    "bshaffer/oauth2-server-php": "~1.9",
+    "symfony/http-foundation": "3.3.*",
+    "hirak/prestissimo": "^0.3.7"
   },
   "require-dev": {
-    "satooshi/php-coveralls": "^1.0",
-    "symfony/yaml": ">=2.7,<2.8",
-    "symfony/event-dispatcher": ">=2.7,<2.8",
-    "symfony/config": ">=2.7,<2.8",
-    "symfony/stopwatch": ">=2.7,<2.8",
-    "symfony/console": ">=2.7,<2.8",
-    "symfony/filesystem": ">=2.7,<2.8"
+    "satooshi/php-coveralls": "2.0.x-dev",
+    "symfony/yaml": "3.3.*",
+    "symfony/event-dispatcher": "3.3.*",
+    "symfony/config": "3.3.*",
+    "symfony/stopwatch": "3.3.*",
+    "symfony/console": "3.3.*",
+    "symfony/filesystem": "3.3.*"
   },
   "config": {
-      "platform": {
-          "php": "5.4.16"
-      }
+    "platform": {
+      "php": "5.5.9"
+    },
+    "preferred-install": {
+      "*": "dist"
+    }
   }
 }
 
