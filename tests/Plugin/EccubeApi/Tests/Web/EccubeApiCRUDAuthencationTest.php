@@ -13,11 +13,11 @@ namespace Plugin\EccubeApi\Tests\Web;
 
 use Eccube\Common\Constant;
 use Eccube\Entity\AbstractEntity;
+use Eccube\Entity\AuthorityRole;
+use Eccube\Entity\CustomerFavoriteProduct;
 use Eccube\Entity\MailHistory;
 use Eccube\Entity\MailTemplate;
-use Eccube\Entity\CustomerFavoriteProduct;
 use Eccube\Entity\ProductTag;
-use Eccube\Entity\AuthorityRole;
 use Plugin\EccubeApi\Util\EntityUtil;
 use Symfony\Component\Security\Core\User\UserInterface;
 

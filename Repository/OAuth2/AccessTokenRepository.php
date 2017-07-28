@@ -12,8 +12,8 @@
 namespace Plugin\EccubeApi\Repository\OAuth2;
 
 use Doctrine\ORM\EntityRepository;
-use Plugin\EccubeApi\Entity\OAuth2\AccessToken;
 use OAuth2\Storage\AccessTokenInterface;
+use Plugin\EccubeApi\Entity\OAuth2\AccessToken;
 
 
 /**

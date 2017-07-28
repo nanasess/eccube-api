@@ -11,9 +11,9 @@
 
 namespace Plugin\EccubeApi\Tests\Repository\OAuth2;
 
-use Plugin\EccubeApi\Tests\AbstractEccubeApiTestCase;
 use Plugin\EccubeApi\Entity\OAuth2\Client as OAuth2Client;
 use Plugin\EccubeApi\Entity\OAuth2\ClientScope;
+use Plugin\EccubeApi\Tests\AbstractEccubeApiTestCase;
 
 
 /**

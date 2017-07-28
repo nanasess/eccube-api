@@ -17,11 +17,11 @@ use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
 use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-use Plugin\EccubeApi\Form\Type\EccubeApiConfigType;
-use Plugin\EccubeApi\Form\Type\ApiClientType;
-use Symfony\Component\Yaml\Yaml;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Plugin\EccubeApi\Form\Type\ApiClientType;
+use Plugin\EccubeApi\Form\Type\EccubeApiConfigType;
+use Symfony\Component\Yaml\Yaml;
 
 
 class EccubeApiServiceProvider implements ServiceProviderInterface
@@ -330,5 +330,9 @@ class EccubeApiServiceProvider implements ServiceProviderInterface
 
         // Service
 
+        $app->extend('form.types', function ($types) use ($app) {
+            $types[] = new \Plugin\EccubeApi\Form\Type\OAuth2AuthorizationType($app);
+            return $types;
+        });
     }
 }

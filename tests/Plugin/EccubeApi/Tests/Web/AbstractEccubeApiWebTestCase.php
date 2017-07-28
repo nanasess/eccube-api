@@ -15,9 +15,9 @@ use Eccube\Common\Constant;
 use Eccube\Tests\Mock\CsrfTokenMock;
 use Plugin\EccubeApi\Tests\AbstractEccubeApiTestCase;
 use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpKernel\Client;
 
 
 class AbstractEccubeApiWebTestCase extends AbstractEccubeApiTestCase

@@ -12,8 +12,8 @@
 namespace Plugin\EccubeApi\Repository\OAuth2;
 
 use Doctrine\ORM\EntityRepository;
-use Plugin\EccubeApi\Entity\OAuth2\RefreshToken;
 use OAuth2\Storage\RefreshTokenInterface;
+use Plugin\EccubeApi\Entity\OAuth2\RefreshToken;
 
 /**
  * RefreshTokenRepository

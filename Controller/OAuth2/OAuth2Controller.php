@@ -13,12 +13,12 @@ namespace Plugin\EccubeApi\Controller\OAuth2;
 
 use Eccube\Application;
 use Eccube\Common\Constant;
+use OAuth2\Encryption\FirebaseJwt as Jwt;
+use OAuth2\HttpFoundationBridge\Request as BridgeRequest;
+use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
+use Plugin\EccubeApi\Controller\AbstractApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
-use OAuth2\HttpFoundationBridge\Request as BridgeRequest;
-use OAuth2\Encryption\FirebaseJwt as Jwt;
-use Plugin\EccubeApi\Controller\AbstractApiController;
 
 /**
  * OAuth2.0 Authorization をするためのコントローラ.
@@ -54,7 +54,7 @@ class OAuth2Controller extends AbstractApiController
         $Response = new BridgeResponse();
         $form = $app['form.factory']->createNamed(
             '',                 // 無名のフォームを生成
-            new \Plugin\EccubeApi\Form\Type\OAuth2AuthorizationType($app),
+            \Plugin\EccubeApi\Form\Type\OAuth2AuthorizationType::class,
             $BridgeRequest->query->all(),
             array(
                 // 'csrf_protection' => false,

@@ -11,14 +11,14 @@
 
 namespace Plugin\EccubeApi\Tests;
 
-use Eccube\Tests\Web\AbstractWebTestCase;
 use Eccube\Application;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Eccube\Tests\Web\AbstractWebTestCase;
 use Plugin\EccubeApi\Entity\OAuth2\Client as OAuth2Client;
 use Plugin\EccubeApi\Entity\OAuth2\ClientScope;
+use Plugin\EccubeApi\Entity\OAuth2\OpenID\PublicKey;
 use Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfo;
 use Plugin\EccubeApi\Entity\OAuth2\OpenID\UserInfoAddress;
-use Plugin\EccubeApi\Entity\OAuth2\OpenID\PublicKey;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * AbstractEccubeApiTestCase

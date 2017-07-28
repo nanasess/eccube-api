@@ -11,8 +11,8 @@
 
 namespace Plugin\EccubeApi\Entity\OAuth2;
 
-use Eccube\Common\Constant;
 use Doctrine\ORM\Mapping as ORM;
+use Eccube\Common\Constant;
 
 /**
  * Client

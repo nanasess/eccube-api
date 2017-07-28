@@ -13,9 +13,11 @@ namespace Plugin\EccubeApi\Controller;
 
 use Eccube\Application;
 use Eccube\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
 use OAuth2\Encryption\FirebaseJwt as Jwt;
+use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
+use Plugin\EccubeApi\Form\Type\ApiClientType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ApiClientController
@@ -104,10 +106,10 @@ class ApiClientController extends AbstractController
         $UserInfo = $app['eccube.repository.oauth2.openid.userinfo']->findOneBy($userInfoConditions);
         $PublicKey = $app['eccube.repository.oauth2.openid.public_key']->findOneBy(array('UserInfo' => $UserInfo));
 
-        $builder = $app['form.factory']->createBuilder('api_client', $Client);
+        $builder = $app['form.factory']->createBuilder(ApiClientType::class, $Client);
         $builder->remove('Scopes');
         $ListScopes = $app['eccube.repository.oauth2.scope']->findBy(array('is_default' => true, $scope_key => 1));
-        $builder->add('Scopes', 'entity', array(
+        $builder->add('Scopes', EntityType::class, array(
                 'label' => 'scope',
                 'choice_label' => 'label',
                 'choice_value' => 'scope',
@@ -200,10 +202,10 @@ class ApiClientController extends AbstractController
         }
         $Client = new \Plugin\EccubeApi\Entity\OAuth2\Client();
 
-        $builder = $app['form.factory']->createBuilder('api_client', $Client);
+        $builder = $app['form.factory']->createBuilder(ApiClientType::class, $Client);
         $builder->remove('Scopes');
         $Scopes = $app['eccube.repository.oauth2.scope']->findBy(array('is_default' => true, $scope_key => 1));
-        $builder->add('Scopes', 'entity', array(
+        $builder->add('Scopes', EntityType::class, array(
                 'label' => 'scope',
                 'choice_label' => 'label',
                 'choice_value' => 'scope',

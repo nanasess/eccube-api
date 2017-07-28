@@ -36,6 +36,7 @@ class ClientScope extends \Eccube\Entity\AbstractEntity
      * @var integer
      *
      * @ORM\Column(name="scope_id", type="integer", nullable=false, options={"unsigned":false})
+     * @ORM\Id
      */
     private $scope_id;
 

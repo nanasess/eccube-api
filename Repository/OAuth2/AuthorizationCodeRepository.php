@@ -13,9 +13,9 @@
 namespace Plugin\EccubeApi\Repository\OAuth2;
 
 use Doctrine\ORM\EntityRepository;
-use Plugin\EccubeApi\Entity\OAuth2\AuthorizationCode;
-use OAuth2\Storage\AuthorizationCodeInterface;
 use OAuth2\OpenID\Storage\AuthorizationCodeInterface as OpenIDAuthorizationCodeInterface;
+use OAuth2\Storage\AuthorizationCodeInterface;
+use Plugin\EccubeApi\Entity\OAuth2\AuthorizationCode;
 
 /**
  * AuthorizationCodeRepository

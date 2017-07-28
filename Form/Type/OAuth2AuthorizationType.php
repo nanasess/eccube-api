@@ -12,6 +12,7 @@
 namespace Plugin\EccubeApi\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,44 +30,44 @@ class OAuth2AuthorizationType extends AbstractType
     {
         // TODO
         $builder
-            ->add('client_id', 'hidden', array(
+            ->add('client_id', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ))
-            ->add('redirect_uri', 'hidden', array(
+            ->add('redirect_uri', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ))
-            ->add('response_type', 'hidden', array(
+            ->add('response_type', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ))
-            ->add('state', 'hidden', array(
+            ->add('state', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ))
-            ->add('scope', 'hidden', array(
+            ->add('scope', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ))
-            ->add('nonce', 'hidden', array(
+            ->add('nonce', HiddenType::class, array(
                 'constraints' => array(
                     // new Assert\NotBlank(),
                 ),
             ))
-            ->add('authorized', 'hidden', array(
+            ->add('authorized', HiddenType::class, array(
                 'constraints' => array(
                     new Assert\NotBlank(),
                 ),
             ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'oauth_authorization';
     }

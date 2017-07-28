@@ -12,11 +12,11 @@
 
 namespace Plugin\EccubeApi\Util;
 
+use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\Proxy\Proxy;
 use Eccube\Application;
 use Eccube\Entity\AbstractEntity;
 use Eccube\Util\EntityUtil as BaseEntityUtil;
-use Doctrine\ORM\PersistentCollection;
-use Doctrine\ORM\Proxy\Proxy;
 
 /**
  * Api用の EntityUtil.

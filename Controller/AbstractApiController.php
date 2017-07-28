@@ -11,13 +11,13 @@
 
 namespace Plugin\EccubeApi\Controller;
 
-use Eccube\Application;
-use Eccube\Entity\AbstractEntity;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Proxy\Proxy;
-use Symfony\Component\HttpFoundation\Request;
-use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
+use Eccube\Application;
+use Eccube\Entity\AbstractEntity;
 use OAuth2\HttpFoundationBridge\Request as BridgeRequest;
+use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ApiController の抽象クラス.

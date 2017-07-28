@@ -16,6 +16,9 @@ use Eccube\Application;
 use Eccube\Common\Constant;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
+use Eccube\Form\Type\Master\ProductListMaxType;
+use Eccube\Form\Type\Master\ProductListOrderByType;
+use Eccube\Form\Type\SearchProductType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -44,7 +47,7 @@ class EccubeApiController extends AbstractApiController
 
         // searchForm
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
-        $builder = $app['form.factory']->createNamedBuilder('', 'search_product');
+        $builder = $app['form.factory']->createNamedBuilder('', SearchProductType::class);
         $builder->setMethod('GET');
 
         /* @var $searchForm \Symfony\Component\Form\FormInterface */
@@ -68,7 +71,7 @@ class EccubeApiController extends AbstractApiController
         );
 
         // 表示件数
-        $builder = $app['form.factory']->createNamedBuilder('disp_number', 'product_list_max', null, array(
+        $builder = $app['form.factory']->createNamedBuilder('disp_number', ProductListMaxType::class, null, array(
             'empty_data' => null,
             'required' => false,
             'label' => '表示件数',
@@ -81,7 +84,7 @@ class EccubeApiController extends AbstractApiController
         $dispNumberForm->handleRequest($request);
 
         // ソート順
-        $builder = $app['form.factory']->createNamedBuilder('orderby', 'product_list_order_by', null, array(
+        $builder = $app['form.factory']->createNamedBuilder('orderby', ProductListOrderByType::class, null, array(
             'empty_data' => null,
             'required' => false,
             'label' => '表示順',

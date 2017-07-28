@@ -12,11 +12,11 @@
 
 namespace Plugin\EccubeApi\Repository\OAuth2;
 
-use Eccube\Entity\Member;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\EntityRepository;
-use OAuth2\Storage\ScopeInterface;
+use Eccube\Entity\Member;
 use OAuth2\RequestInterface;
+use OAuth2\Storage\ScopeInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * ScopeRepository
